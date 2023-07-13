@@ -1,0 +1,6 @@
+@import '../../../styles/common';
+
+.authLayout{
+    @include flex(flex, center, center);
+    min-height: 65vh;
+}

@@ -29,7 +29,7 @@ const Header = () => {
           <Avatar alt="logo" src="/imgs/logo.svg" />
         </Typography>
 
-        <Box sx={{ flexGrow: 1 }}>
+        <Box >
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu}>
               <Avatar alt="Remy Sharp" src="/imgs/user.jpg" />

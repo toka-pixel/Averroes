@@ -38,3 +38,10 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 link:https://averroes-rble.vercel.app/
+
+## Description
+After the user is logged in, go to the home page to show the To Do and Completed Tasks.
+user can add task , update and delete task.
+user can show your profile .
+
+

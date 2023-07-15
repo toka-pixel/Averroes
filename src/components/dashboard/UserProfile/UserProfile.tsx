@@ -28,7 +28,7 @@ const UserProfile = () => {
       {userName && userName}
       <Box component="form">
         <Grid container spacing={2}>
-          <Grid item xs={6} md={6}>
+          <Grid item xs={12} md={6}>
             <TextField
               margin="normal"
               required
@@ -40,7 +40,7 @@ const UserProfile = () => {
               fullWidth
             />
           </Grid>
-          <Grid item xs={6} md={6}>
+          <Grid item xs={12} md={6}>
             <TextField
               margin="normal"
               required
@@ -52,7 +52,7 @@ const UserProfile = () => {
               fullWidth
             />
           </Grid>
-          <Grid item xs={6} md={6}>
+          <Grid item xs={12} md={6}>
             <TextField
               margin="normal"
               required
@@ -64,7 +64,7 @@ const UserProfile = () => {
               type="password"
             />
           </Grid>
-          <Grid item xs={6} md={6}>
+          <Grid item xs={12} md={6}>
             <TextField
               margin="normal"
               required

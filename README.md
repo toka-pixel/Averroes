@@ -43,5 +43,6 @@ link:https://averroes-rble.vercel.app/
 After the user is logged in, go to the home page to show the To Do and Completed Tasks.
 user can add task , update and delete task.
 user can show your profile .
+display the weather details . 
 
 

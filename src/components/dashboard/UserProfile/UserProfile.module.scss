@@ -1,0 +1,27 @@
+@import "../../../styles/common";
+
+.userProfile {
+
+
+  width: 100%;
+  text-align: center;
+  text-align: -webkit-center;
+  display: block;
+  margin: auto;
+
+  .user {
+    margin: 20px;
+
+    position: relative;
+    width: fit-content;
+    .edit {
+      position: absolute;
+      font-size: 16px;
+      background: $yellow;
+      border-radius: 50%;
+      padding: 2px;
+      right: -2%;
+      bottom: -3px;
+    }
+  }
+}

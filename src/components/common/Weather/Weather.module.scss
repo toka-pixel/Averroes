@@ -1,0 +1,18 @@
+@import "../../../styles/common";
+
+.weather {
+  @include flex(flex, space-between, center);
+
+  background-color: $yellow;
+  border-radius: 30px;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  .clouds {
+    color: $purple;
+  }
+
+
+  .rightSide {
+    @include flex(flex);
+  }
+}

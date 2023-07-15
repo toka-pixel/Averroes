@@ -1,0 +1,30 @@
+@import "../../../styles/common";
+
+.home {
+  .tasks_newTask {
+    @include flex(flex, space-between, baseline);
+    margin-bottom: 52px;
+  }
+
+  .tasks{
+    .status{
+      border-right: 3px solid $yellow;
+      margin-bottom: 30px;
+    }
+
+    .button_status{
+      width: 150px;
+     margin-bottom: 20px;
+     box-shadow: none;
+    }
+  }
+
+  
+
+  .active{
+   background-color: $rose;
+  }
+  .not_active{
+
+  }
+}

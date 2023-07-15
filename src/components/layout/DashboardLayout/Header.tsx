@@ -8,12 +8,10 @@ import Avatar from "@material-ui/core/Avatar";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
-import styles from './Header.module.scss';
-
+import styles from "./Header.module.scss";
+import Link from "next/link";
 
 const Header = () => {
-  const settings = ["Profile",  "Logout"];
-
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -25,20 +23,19 @@ const Header = () => {
   };
 
   return (
-    <AppBar  className={styles.header} position="static">
-      <Toolbar  className={styles.flex} >
-        <Typography variant="h6" component="div" >
+    <AppBar className={styles.header} position="static">
+      <Toolbar className={styles.flex}>
+        <Typography variant="h6" component="div">
           <Avatar alt="logo" src="/imgs/logo.svg" />
         </Typography>
 
         <Box sx={{ flexGrow: 1 }}>
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu}>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              <Avatar alt="Remy Sharp" src="/imgs/user.jpg" />
             </IconButton>
           </Tooltip>
           <Menu
-            // sx={{ mt: "45px" }}
             id="menu-appbar"
             anchorEl={anchorElUser}
             anchorOrigin={{
@@ -53,11 +50,15 @@ const Header = () => {
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
           >
-            {settings.map((setting) => (
-              <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                <Typography>{setting}</Typography>
-              </MenuItem>
-            ))}
+            <MenuItem onClick={handleCloseUserMenu}>
+              <Link href={"user-profile"}>
+                <Typography>user-profile</Typography>
+              </Link>
+            </MenuItem>
+
+            <MenuItem onClick={handleCloseUserMenu}>
+              <Typography>LogOut</Typography>
+            </MenuItem>
           </Menu>
         </Box>
       </Toolbar>

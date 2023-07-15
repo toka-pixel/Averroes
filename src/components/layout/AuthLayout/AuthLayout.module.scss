@@ -1,6 +1,17 @@
-@import '../../../styles/common';
+@import "../../../styles/common";
 
-.authLayout{
+.authLayout {
+  min-height: 100vh;
+  .leftSide {
+    background-color: $yellow;
     @include flex(flex, center, center);
-    min-height: 65vh;
+    & {
+      @media (max-width:900px) {
+        display: none;
+      }
+    }
+  }
+  .form {
+    text-align: center;
+  }
 }

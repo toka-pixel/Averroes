@@ -7,10 +7,10 @@ import {
   DeleteForever,
   Edit,
 } from "@material-ui/icons";
-import { Snackbar   } from "@material-ui/core";
 import { useAppDispatch } from "@/hooks/storeIndex";
 import { deleteTask, updatedTask } from "@/store/Task/taskSlice";
 import AddEditModal from "@/components/common/AddEditModal/AddEditModal";
+import { useSweetAlert } from "../../../hooks/showAlert";
 import styles from "./Task.module.scss";
 
 type IProps = {
@@ -22,15 +22,13 @@ const Task = (props: IProps) => {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<TaskType>();
-  const [snackbar, setSnackbar] = useState(false);
 
   const dispatch = useAppDispatch();
-
+  const { showAlert } = useSweetAlert();
 
   const handleDeleteTask = (id: number) => {
-    setSnackbar(true);
-    dispatch(deleteTask({ id })).payload.id;
-   
+    dispatch(deleteTask({ id }));
+    showAlert("Delete Task");
   };
 
   const handleSelectedItem = (item: TaskType) => {
@@ -47,9 +45,9 @@ const Task = (props: IProps) => {
 
   const onSubmit = (values: TaskType) => {
     dispatch(updatedTask(values));
-    
+    showAlert("Update Task");
   };
-console.log(snackbar)
+
   return (
     <>
       <div className={styles.task}>
@@ -70,12 +68,16 @@ console.log(snackbar)
         <div className={styles.actions}>
           <Edit
             className={styles.actionIcon}
-            onClick={() => handleSelectedItem(taskObj)}
+            onClick={() => {
+              handleSelectedItem(taskObj);
+            }}
           />
 
           <DeleteForever
             className={styles.actionIcon}
-            onClick={() => {handleDeleteTask(taskObj.id)}}
+            onClick={() => {
+              handleDeleteTask(taskObj.id);
+            }}
           />
         </div>
       </div>
@@ -85,12 +87,6 @@ console.log(snackbar)
         title={"Edit Task"}
         initialValues={selectedItem}
         onSubmit={onSubmit}
-      />
-      <Snackbar
-        open={snackbar}
-        onClose={()=>setSnackbar(false)}
-        autoHideDuration={6000}
-        message={'Delete Task'}
       />
     </>
   );

@@ -26,9 +26,6 @@ type IProps = {
 const AddEditModal = (props: IProps) => {
   const { open, onClose, title, initialValues, onSubmit } = props;
 
-  const vertical = "top";
-  const horizontal = "center";
-
   const [values, setValues] = useState(initialValues || {});
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
@@ -131,9 +128,9 @@ const AddEditModal = (props: IProps) => {
       <Snackbar
         open={openSnackbar}
         onClose={() => setOpenSnackbar(false)}
-        autoHideDuration={5000}
+        autoHideDuration={9000}
         message={title}
-        anchorOrigin={{ vertical, horizontal }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
       />
     </div>
   );

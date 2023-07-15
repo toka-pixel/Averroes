@@ -9,10 +9,10 @@ const Weather = () => {
   const [userName, setUserName] = useState<any>("");
 
   useEffect(() => {
-    // getWeather().then((res) => {
-    //   setClouds(res.clouds.all);
-    //   setDescription(res.weather[0].description);
-    // });
+    getWeather().then((res) => {
+      setClouds(res.clouds.all);
+      setDescription(res.weather[0].description);
+    });
 
     if (typeof window !== "undefined") {
       setUserName(localStorage?.getItem("user-name"));

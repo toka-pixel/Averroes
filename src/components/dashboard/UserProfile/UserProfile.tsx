@@ -76,15 +76,16 @@ const UserProfile = () => {
               type="password"
             />
           </Grid>
-
-          <TextField
-            margin="normal"
-            required
-            name="Email"
-            label="Email"
-            id="Email"
-            fullWidth
-          />
+          <Grid item xs={12}>
+            <TextField
+              margin="normal"
+              required
+              name="Email"
+              label="Email"
+              id="Email"
+              fullWidth
+            />
+          </Grid>
         </Grid>
 
         <br />
@@ -105,7 +106,10 @@ const UserProfile = () => {
         >
           Delete
         </Button>
+
+       
       </Box>
+      <br/>
     </div>
   );
 };

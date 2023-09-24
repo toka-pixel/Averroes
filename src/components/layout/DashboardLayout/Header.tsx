@@ -29,7 +29,9 @@ const Header = () => {
     <AppBar className={styles.header} position="static">
       <Toolbar className={styles.flex}>
         <Typography variant="h6" component="div">
-          <Avatar alt="logo" src="/imgs/logo.svg" />
+          <Link href="/home">
+            <Avatar alt="logo" src="/imgs/logo.svg" />
+          </Link>
         </Typography>
 
         <Box>

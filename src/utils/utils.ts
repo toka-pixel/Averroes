@@ -1,4 +1,4 @@
-'use client';
+
 import { enqueueSnackbar } from "notistack";
 
 export function showNotification(

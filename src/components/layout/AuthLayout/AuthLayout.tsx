@@ -1,6 +1,5 @@
 import Image from "next/image";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
+import {Grid,Paper} from "@mui/material";
 import styles from "./AuthLayout.module.scss";
 
 const AuthLayout = (props: { children: React.ReactNode }) => {

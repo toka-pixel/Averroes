@@ -1,13 +1,16 @@
 import { useState } from "react";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Box from "@material-ui/core/Box";
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
-import Avatar from "@material-ui/core/Avatar";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import Typography from "@material-ui/core/Typography";
+import {
+  AppBar,
+  Toolbar,
+  Box,
+  Tooltip,
+  IconButton,
+  Avatar,
+  Menu,
+  MenuItem,
+  Typography,
+} from "@mui/material";
+
 import styles from "./Header.module.scss";
 import Link from "next/link";
 
@@ -29,7 +32,7 @@ const Header = () => {
           <Avatar alt="logo" src="/imgs/logo.svg" />
         </Typography>
 
-        <Box >
+        <Box>
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu}>
               <Avatar alt="Remy Sharp" src="/imgs/user.jpg" />

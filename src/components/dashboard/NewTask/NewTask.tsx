@@ -1,23 +1,20 @@
-import { useState } from "react";
-import AddIcon from "@material-ui/icons/Add";
-import { Button } from "@material-ui/core";
-import { TaskType } from "@/shared/task.type";
+import { AddCircle } from "@mui/icons-material";
+import { Button } from "@mui/material";
+import { TaskInterface } from "@/shared/task.interface";
 import { useAppDispatch } from "@/hooks/storeIndex";
 import { newTask } from "@/store/Task/taskSlice";
-import AddEditModal from "@/components/common/AddEditModal/AddEditModal";
+import SharedModal from "@/components/common/SharedModal/SharedModal";
+import TaskForm from "../Task/components/TaskForm";
+import { useModal } from "@/components/common/SharedModal/hooks/useModal";
+import { showNotification } from "@/utils/utils";
 
 const NewTask = () => {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleCloseModal = () => {
-    setOpen(false);
-  };
+  const { isModalOpen, closeModal, openModal } = useModal<"add_Task">();
 
   const dispatch = useAppDispatch();
 
-  const handleSubmit = (values: TaskType) => {
+  const handleSubmit = (values: TaskInterface) => {
+
     dispatch(
       newTask({
         ...values,
@@ -25,21 +22,41 @@ const NewTask = () => {
         date: new Date().toLocaleDateString(),
       })
     );
+    closeModal();
+    showNotification('Add New Task','success');
   };
 
   return (
     <div>
-      <Button onClick={handleOpen} variant="contained" className="purpleButton">
-        create new task <AddIcon />
+      <Button
+        onClick={() => openModal("add_Task")}
+        variant="contained"
+        className="purpleButton"
+      >
+        create new task <AddCircle />
       </Button>
-
-      <AddEditModal
-        open={open}
-        onClose={handleCloseModal}
-        title={"Create New Task"}
-        initialValues={{ description: "", completed: false, date: "", id: 1 }}
-        onSubmit={handleSubmit}
-      />
+      <SharedModal
+        open={isModalOpen("add_Task")}
+        onClose={closeModal}
+        onCancel={closeModal}
+        onSubmit={() => console.log("add")}
+        modal={{
+          title: "Add New Task",
+          closeButton: {
+            label: "Cancel",
+            form: "task_form",
+          },
+          submitButton: {
+            label: "Add",
+            type: "submit",
+            variant: "contained",
+            color: "success",
+            form: "task_form",
+          },
+        }}
+      >
+        <TaskForm onSubmit={handleSubmit} />
+      </SharedModal>
     </div>
   );
 };

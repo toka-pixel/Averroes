@@ -6,8 +6,8 @@ import {
   Avatar,
   Grid,
   Typography,
-} from "@material-ui/core";
-import { Edit } from "@material-ui/icons";
+} from "@mui/material";
+import { Edit } from "@mui/icons-material";
 import styles from "./UserProfile.module.scss";
 
 const UserProfile = () => {

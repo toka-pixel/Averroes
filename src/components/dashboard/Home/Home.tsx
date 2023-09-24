@@ -1,18 +1,16 @@
 import { useState, useEffect } from "react";
 import Weather from "@/components/common/Weather/Weather";
 import NewTask from "../NewTask/NewTask";
-import { Grid, Button } from "@material-ui/core";
-import { FormatListBulleted, PlaylistAddCheck } from "@material-ui/icons";
+import { Grid, Button } from "@mui/material";
+import { FormatListBulleted, PlaylistAddCheck } from "@mui/icons-material";
 import { useAppSelector } from "@/hooks/storeIndex";
-import { TaskType } from "@/shared/task.type";
-import Task from "../Task/Task";
+import { TaskInterface } from "@/shared/task.interface";
+import TaskData from "../Task/components/TaskData";
 import styles from "./Home.module.scss";
 
 const Home = () => {
-
-
   const [completed, setCompleted] = useState<boolean>(false);
-  const [tasks, setTasks] = useState<TaskType[]>([]);
+  const [tasks, setTasks] = useState<TaskInterface[]>([]);
 
   const tasksList = useAppSelector((stata) => stata.task.tasksList);
 
@@ -21,12 +19,12 @@ const Home = () => {
   };
 
   const activeStyle = (type: boolean) => {
-    return completed === type ? styles["active"] : "";
+    return completed === type ? styles["active"] : styles["not_active"];
   };
 
   useEffect(() => {
     setTasks(
-      tasksList.filter((task: TaskType) => task.completed === completed)
+      tasksList.filter((task: TaskInterface) => task.completed === completed)
     );
   }, [completed, tasksList]);
 
@@ -57,11 +55,7 @@ const Home = () => {
             <PlaylistAddCheck /> Completed
           </Button>
         </Grid>
-        <Grid item xs={12} sm={8} className={styles.tasksList}>
-          {tasks.map((task) => (
-            <Task taskObj={task} key={Math.random()} />
-          ))}
-        </Grid>
+        <TaskData tasks={tasks} />
       </Grid>
     </div>
   );

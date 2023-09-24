@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Button, TextField, Box, Typography } from "@material-ui/core";
+import { Button, TextField, Box, Typography } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import styles from "./Login.module.scss";

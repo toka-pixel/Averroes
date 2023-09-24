@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TaskType } from "@/shared/task.type";
+import { TaskInterface } from "@/shared/task.interface";
 
 type initialStateType = {
-  tasksList: TaskType[];
+  tasksList: TaskInterface[];
 };
 
-const tasksList: TaskType[] = [
+const tasksList: TaskInterface[] = [
   {
     description: "create header",
     completed: false,
@@ -30,7 +30,7 @@ export const taskReducer = createSlice({
   initialState,
 
   reducers: {
-    newTask: (state, action: PayloadAction<TaskType>) => {
+    newTask: (state, action: PayloadAction<TaskInterface>) => {
       state.tasksList.push(action.payload);
     },
 
@@ -41,7 +41,7 @@ export const taskReducer = createSlice({
       );
     },
 
-    updatedTask: (state, action: PayloadAction<TaskType>) => {
+    updatedTask: (state, action: PayloadAction<TaskInterface>) => {
       const { id, description, completed, date } = action.payload;
 
       state.tasksList = state.tasksList.map((task: any) =>

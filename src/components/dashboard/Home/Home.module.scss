@@ -6,25 +6,23 @@
     margin-bottom: 52px;
   }
 
-  .tasks{
-    .status{
+  .tasks {
+    .status {
       border-right: 3px solid $yellow;
       margin-bottom: 30px;
     }
 
-    .button_status{
+    .button_status {
       width: 150px;
-     margin-bottom: 20px;
-     box-shadow: none;
+      margin-bottom: 20px;
+      box-shadow: none;
     }
   }
 
-  
-
-  .active{
-   background-color: $rose;
+  .active {
+    background-color: $rose;
   }
-  .not_active{
-
+  .not_active {
+    background-color: $gray;
   }
 }

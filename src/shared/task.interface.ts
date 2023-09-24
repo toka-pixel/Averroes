@@ -1,4 +1,4 @@
-export interface TaskType {
+export interface TaskInterface {
   description: string;
   completed: boolean;
   date: string;

@@ -106,10 +106,8 @@ const UserProfile = () => {
         >
           Delete
         </Button>
-
-       
       </Box>
-      <br/>
+      <br />
     </div>
   );
 };

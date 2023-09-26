@@ -2,7 +2,7 @@ import React from "react";
 import { Grid ,Box, Typography} from "@mui/material";
 import { TaskInterface } from "@/shared/task.interface";
 import Task from "./Task";
-import AssignmentLateIcon from "@mui/icons-material/AssignmentLate";
+import Image from "next/image";
 
 interface TasksProps {
   tasks: TaskInterface[];
@@ -17,7 +17,7 @@ const TaskData: React.FC<TasksProps> = ({ tasks }) => {
     </Grid>
   ) : (
     <Box sx={{margin:'auto',textAlign:'center'}}>
-         <AssignmentLateIcon sx={{ color: 'text.secondary' ,fontSize:'40px'}} />
+         <Image src='/imgs/empty.png' alt='empty' width={300} height={200} />
          <Typography>There are no tasks yet</Typography>
     </Box>
  

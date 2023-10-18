@@ -1,29 +1,22 @@
 import { AddCircle } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { TaskInterface } from "@/shared/task.interface";
-import { useAppDispatch } from "@/hooks/storeIndex";
-import { newTask } from "@/store/Task/taskSlice";
 import SharedModal from "@/components/common/SharedModal/SharedModal";
-import TaskForm from "../Task/components/TaskForm";
+import TaskForm from "./TaskForm";
 import { useModal } from "@/components/common/SharedModal/hooks/useModal";
 import { showNotification } from "@/utils/utils";
+import useAddTask from "../hooks/useAddTask";
 
 const NewTask = () => {
   const { isModalOpen, closeModal, openModal } = useModal<"add_Task">();
 
-  const dispatch = useAppDispatch();
+  const { mutateAsync:addTask } = useAddTask();
 
   const handleSubmit = (values: TaskInterface) => {
-
-    dispatch(
-      newTask({
-        ...values,
-        id: Math.random(),
-        date: new Date().toLocaleDateString(),
-      })
-    );
-    closeModal();
-    showNotification('Add New Task','success');
+    addTask(values).then(() => {
+      closeModal();
+      showNotification("Add New Task", "success");
+    });
   };
 
   return (
@@ -50,7 +43,7 @@ const NewTask = () => {
             label: "Add",
             type: "submit",
             variant: "contained",
-            color: "success",
+            color: "primary",
             form: "task_form",
           },
         }}

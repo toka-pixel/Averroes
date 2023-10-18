@@ -2,27 +2,17 @@
 
 .task {
   @include flex(flex, space-between, baseline);
+  background-color: white;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  padding: 10px 10px;
   .data {
     display: flex;
-    padding-left: 16px;
-    padding-bottom: 10px;
+
     .list {
       color: $purple;
-      font-size: 30px;
-    }
-    .details {
-      padding-left: 15px;
-      p{
-        color: $gray;
-      }
-      .description {
-        text-transform: uppercase;
-        margin-top: 2px;
-      }
-      .dataIcon {
-         font-size: inherit;
-        margin-right: 4px;
-      }
+      font-size: 17px;
     }
   }
 

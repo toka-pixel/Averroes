@@ -10,12 +10,16 @@ import {
   MenuItem,
   Typography,
 } from "@mui/material";
-
 import styles from "./Header.module.scss";
 import Link from "next/link";
+import useGetUser from "@/components/auth/Hooks/useGetUser";
+import Cookies from "js-cookie";
+import router from "next/router";
 
 const Header = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+
+  const { data: userInfo } = useGetUser();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -25,8 +29,18 @@ const Header = () => {
     setAnchorElUser(null);
   };
 
+  const logout = () => {
+    handleCloseUserMenu();
+    Cookies.remove("tasks-management-userId");
+    router.push("/login");
+  };
+
   return (
-    <AppBar className={styles.header} position="static">
+    <AppBar
+      className={styles.header}
+      position="static"
+      sx={{ backgroundColor: "ButtonShadow" }}
+    >
       <Toolbar className={styles.flex}>
         <Typography variant="h6" component="div">
           <Link href="/home">
@@ -37,7 +51,7 @@ const Header = () => {
         <Box>
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu}>
-              <Avatar alt="Remy Sharp" src="/imgs/user.jpg" />
+              <Avatar alt={ userInfo?.firstName} src={userInfo?.avatar} />
             </IconButton>
           </Tooltip>
           <Menu
@@ -61,7 +75,7 @@ const Header = () => {
               </Link>
             </MenuItem>
 
-            <MenuItem onClick={handleCloseUserMenu}>
+            <MenuItem onClick={logout}>
               <Typography>LogOut</Typography>
             </MenuItem>
           </Menu>

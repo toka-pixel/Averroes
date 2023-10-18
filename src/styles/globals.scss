@@ -17,23 +17,22 @@ a {
   }
 }
 
-.textField,
+input,
 button {
-  // width: auto;
-  border-radius: 50px !important;
-  font-size: 12px !important;
+  border-radius: 15px !important;
+  font-size: 12px ;
 }
 
 .width-10 {
   width: 10%;
 }
 
-.ml-10{
+.ml-10 {
   margin-left: 10px !important;
 }
 
 .purpleButton:nth-of-type(1) {
-  background-color: $purple !important;
+  background-color: $purple;
   color: white;
 }
 .yellowButton:nth-of-type(2) {
@@ -52,19 +51,17 @@ button {
 
 .modal {
   position: absolute;
-  top: 50%;
+   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  width: 400px;
+   transform: translate(-50%, -50%);
+   width: 400px;
   background-color: $white;
-  top: 40%;
-
   padding: 20px;
   .appBar {
     position: relative;
     background-color: $white;
     color: $black;
     box-shadow: none;
-
   }
 }
+

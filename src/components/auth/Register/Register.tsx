@@ -3,21 +3,26 @@ import { Button, TextField, Box, Typography } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import useGetAllUsers from "../Hooks/useGetAllUsers";
+import useAddUser from "../Hooks/useAddUser";
 import { UserInterface } from "@/shared/user.interface";
-import { showNotification } from "@/utils/utils";
 import { handleUserAccount } from "@/store/User/userSlice";
-import Cookies from "js-cookie";
 import { useAppDispatch } from "@/hooks/storeIndex";
+import Cookies from "js-cookie";
 
-function Login() {
+const Register = () => {
   const router = useRouter();
 
-  const { isLoading, data } = useGetAllUsers();
-
-  const [values, setValues] = useState({ email: "", password: "" });
+  const { isLoading, mutateAsync: addUser } = useAddUser();
 
   const dispatch = useAppDispatch();
+
+  const [values, setValues] = useState<UserInterface>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    id:''
+  });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -31,33 +36,25 @@ function Login() {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const checkLogin = data?.filter(
-      (user: UserInterface) =>
-        user.email === values.email && user.password === values.password
-    );
+    addUser(values).then((res: any) => {
 
-    if (checkLogin.length > 0) {
       // localStorage.setItem(
       //   "tasks-management",
       //   JSON.stringify({
       //     name: values?.email.split("@")[0],
-      //     userId: checkLogin[0]?.id,
+      //     userId: res?.data?.id,
       //   })
       // );
-      Cookies.set("tasks-management-userId", checkLogin[0]?.id);
-
-      delete checkLogin[0]?.createdAt;
-      dispatch(handleUserAccount(checkLogin[0]));
+      Cookies.set("tasks-management-userId",  res?.data?.id);
+      dispatch(handleUserAccount(values));
       router.push("/home");
-    } else {
-      showNotification("email or password incorrect", "error");
-    }
+    });
   };
 
   return (
     <Box
       sx={{
-        my: 8,
+        my: 5,
         mx: 4,
         display: "flex",
         flexDirection: "column",
@@ -67,9 +64,31 @@ function Login() {
       <Image src="/imgs/logo.svg" alt="logo" width={50} height={50} />
 
       <Typography component="h1" variant="h5">
-        Sign in
+        Sign up
       </Typography>
       <form onSubmit={handleSubmit}>
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          label="First Name"
+          name="firstName"
+          type="text"
+          autoFocus
+          onChange={handleChange}
+        />
+        <br />
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          label="Last Name"
+          name="lastName"
+          type="text"
+          autoFocus
+          onChange={handleChange}
+        />
+        <br />
         <TextField
           margin="normal"
           required
@@ -80,7 +99,6 @@ function Login() {
           autoComplete="email"
           type="email"
           autoFocus
-          className={"textField"}
           onChange={handleChange}
         />
         <br />
@@ -93,7 +111,6 @@ function Login() {
           type="password"
           id="password"
           autoComplete="current-password"
-          className={"textField"}
           onChange={handleChange}
         />
 
@@ -102,25 +119,25 @@ function Login() {
           variant="contained"
           style={{ marginBottom: "20px", marginTop: "20px" }}
           fullWidth
-          loading={isLoading}
           disabled={isLoading}
+          loading={isLoading}
         >
-          sign in
+          Sign up
         </LoadingButton>
 
         <br />
 
         <Button
           variant="contained"
-          fullWidth
-          onClick={() => router.push("/register")}
           color="secondary"
+          fullWidth
+          onClick={() => router.push("/login")}
         >
-          Sign up
+          Sign in
         </Button>
       </form>
     </Box>
   );
-}
+};
 
-export default Login;
+export default Register;

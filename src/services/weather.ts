@@ -1,4 +1,4 @@
-import axios from "axios";
+
 // Define an async function
 export async function getWeather() {
   const key = "64ac30a4391b61da1211ed68dd21e524";

@@ -1,29 +1,35 @@
 import { useEffect, useState } from "react";
 import { getWeather } from "@/services/weather";
 import Image from "next/image";
+import useGetUser from "@/components/auth/Hooks/useGetUser";
 import styles from "./Weather.module.scss";
 
 const Weather = () => {
   const [description, setDescription] = useState<string>();
   const [clouds, setClouds] = useState<number>();
-  const [userName, setUserName] = useState<any>("");
+  const { data: userInfo } = useGetUser();
 
   useEffect(() => {
     getWeather().then((res) => {
-      setClouds(res.clouds.all);
-      setDescription(res.weather[0].description);
+      setClouds(res?.clouds?.all);
+      setDescription(res?.weather[0]?.description);
     });
 
-    if (typeof window !== "undefined") {
-      setUserName(localStorage?.getItem("user-name"));
-    }
+    // if (typeof window !== "undefined") {
+    //   if (localStorage.getItem("tasks-management")) {
+    //     const user: any = JSON.parse(localStorage.getItem("tasks-management")!);
+    //     setUserName(user?.name);
+    //   }
+    // }
   }, []);
 
   return (
     <div className={styles.weather}>
       <div>
         <p className="paragraph">Welcome back,</p>
-        <p className="paragraph">{userName && userName} !</p>
+        <p className="paragraph">
+          {userInfo?.firstName} {userInfo?.lastName}
+        </p>
       </div>
       <div className={styles?.rightSide}>
         <div>

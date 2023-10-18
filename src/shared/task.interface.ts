@@ -1,6 +1,9 @@
+
+import { TaskStatus } from "./taskStatus.enum";
+
 export interface TaskInterface {
   description: string;
-  completed: boolean;
-  date: string;
-  id:number,
+  id: string,
+  userId:string,
+  taskStatus:TaskStatus
 }

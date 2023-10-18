@@ -1,32 +1,70 @@
 import { useState, useEffect } from "react";
 import Weather from "@/components/common/Weather/Weather";
-import NewTask from "../NewTask/NewTask";
-import { Grid, Button } from "@mui/material";
-import { FormatListBulleted, PlaylistAddCheck } from "@mui/icons-material";
+import NewTask from "../Task/components/NewTask";
+import { Grid,  Box } from "@mui/material";
 import { useAppSelector } from "@/hooks/storeIndex";
 import { TaskInterface } from "@/shared/task.interface";
 import TaskData from "../Task/components/TaskData";
+import ActiveUsers from "../ActiveUsers/ActiveUsers";
+import SearchInput from "@/components/common/SearchInput/SearchInput";
 import styles from "./Home.module.scss";
+import Filter from "../Filter/Filter";
 
 const Home = () => {
-  const [completed, setCompleted] = useState<boolean>(false);
-  const [tasks, setTasks] = useState<TaskInterface[]>([]);
 
-  const tasksList = useAppSelector((stata) => stata.task.tasksList);
+  const [tasksList, setTasksList] = useState<TaskInterface[]>([]);
 
-  const changeStatus = (status: boolean) => {
-    setCompleted(status);
-  };
+  const { tasks } = useAppSelector((state) => state.user);
+  const { taskStatusFilter } = useAppSelector((state) => state.filter);
 
-  const activeStyle = (type: boolean) => {
-    return completed === type ? styles["active"] : styles["not_active"];
+  useEffect(() => {
+    setTasksList(tasks);
+  }, [tasks]);
+
+  const taskStatusChange = (filteredTasks: Array<TaskInterface>) => {
+    if (taskStatusFilter.length > 0) {
+      const results = filteredTasks.filter((task) =>
+        taskStatusFilter.includes(task.taskStatus)
+      );
+      return results;
+    }
   };
 
   useEffect(() => {
-    setTasks(
-      tasksList.filter((task: TaskInterface) => task.completed === completed)
-    );
-  }, [completed, tasksList]);
+    const res = taskStatusChange(tasks);
+    res ? setTasksList(res) : setTasksList(tasks);
+  }, [taskStatusFilter]);
+
+  // useEffect(() => {
+  //   setTasksList(() =>
+  //     Array.from(tasksMap.values()).reduce((result, currentArray) => {
+  //       return result.concat(currentArray);
+  //     }, [])
+  //   );
+  // }, [tasksMap]);
+
+  // const changeStatus = (status: string) => {
+  //   setTaskStatus(status);
+  //   const results = tasks.filter((task) => task.taskStatus === status);
+  //   setTasksList(results);
+  // };
+
+  // const activeStyle = (status: string) => {
+  //   return taskStatus === status ? styles["active"] : styles["not_active"];
+  // };
+
+  const handleSearchInputChange = (inputValue: string) => {
+    if (inputValue.trim() !== "") {
+      const results = tasks.filter((task) =>
+        task.description.toLowerCase().startsWith(inputValue.toLowerCase())
+      );
+      const res = taskStatusChange(results);
+      res ? setTasksList(res) : setTasksList(results);
+    } else {
+      const res = taskStatusChange(tasks);
+      res ? setTasksList(res) : setTasksList(tasks);
+    }
+  };
 
   return (
     <div className={styles.home}>
@@ -36,12 +74,19 @@ const Home = () => {
         <NewTask />
       </div>
 
-      <Grid container className={styles.tasks}>
-        <Grid item xs={12} sm={4} className={styles.status}>
-          <Button
+      <Grid
+        container
+        rowSpacing={1}
+        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        className={styles.tasks}
+      >
+        <Grid item xs={12} sm={3}>
+          {/* <Button
             variant="contained"
-            onClick={() => changeStatus(false)}
-            className={`${activeStyle(false)} ${styles["button_status"]}`}
+            onClick={() => changeStatus(TaskStatus.Todo)}
+            className={`${activeStyle(TaskStatus.Todo)} ${
+              styles["button_status"]
+            }`}
             fullWidth
           >
             <FormatListBulleted /> Todo
@@ -49,13 +94,23 @@ const Home = () => {
           <br />
           <Button
             variant="contained"
-            onClick={() => changeStatus(true)}
-            className={`${activeStyle(true)} ${styles["button_status"]}`}
+            onClick={() => changeStatus(TaskStatus.Completed)}
+            className={`${activeStyle(TaskStatus.Completed)} ${
+              styles["button_status"]
+            }`}
           >
             <PlaylistAddCheck /> Completed
-          </Button>
+          </Button> */}
+          <Filter />
         </Grid>
-        <TaskData tasks={tasks} />
+        <Grid item xs={12} sm={9}>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <SearchInput onSearchInputChange={handleSearchInputChange} />
+            <ActiveUsers />
+          </Box>
+          <br />
+          <TaskData tasks={tasksList} />
+        </Grid>
       </Grid>
     </div>
   );

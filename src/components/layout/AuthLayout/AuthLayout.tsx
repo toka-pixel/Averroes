@@ -1,9 +1,15 @@
 import Image from "next/image";
 import {Grid,Paper} from "@mui/material";
+import Home from "@/components/dashboard/Home/Home";
 import styles from "./AuthLayout.module.scss";
+import Cookies from "js-cookie";
 
 const AuthLayout = (props: { children: React.ReactNode }) => {
   const { children } = props;
+
+  // if (!Cookies.get("tasks-management-userId")) {
+  //   return <Home />;
+  // }
 
   return (
     <div>

@@ -1,78 +1,116 @@
 import { TaskInterface } from "@/shared/task.interface";
-import {
-  ListAlt,
-  PlaylistAddCheck,
-  EventNote,
-  DeleteForever,
-  Edit,
-} from "@mui/icons-material";
-import { useAppDispatch } from "@/hooks/storeIndex";
-import { deleteTask, updatedTask } from "@/store/Task/taskSlice";
+import { ListAlt, DeleteForever, Edit } from "@mui/icons-material";
 import SharedModal from "@/components/common/SharedModal/SharedModal";
 import TaskForm from "./TaskForm";
 import styles from "./Task.module.scss";
 import { useModal } from "@/components/common/SharedModal/hooks/useModal";
 import { showNotification } from "@/utils/utils";
-import { Typography } from "@mui/material";
+import {
+  Typography,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
+  Zoom,
+} from "@mui/material";
+import useDeleteTask from "../hooks/useDeleteTask";
+import useEditTask from "../hooks/useEditTask";
+import { TaskStatus } from "@/shared/taskStatus.enum";
+import { useTheme } from "@mui/material";
+import { useState } from "react";
 
-type IProps = {
-  taskObj: TaskInterface;
+type TaskProps = {
+  task: TaskInterface;
 };
 
-const Task = (props: IProps) => {
-  const { taskObj } = props;
+const Task: React.FC<TaskProps> = ({ task }) => {
+  const theme = useTheme();
 
   const { isModalOpen, closeModal, openModal } = useModal<
     "delete_Task" | "edit_Task"
   >();
 
-  const dispatch = useAppDispatch();
+  const [isShown, setIsShown] = useState(false);
 
-  const handleDeleteTask = (id: number) => {
-    dispatch(deleteTask({ id }));
-    closeModal();
-    showNotification("Delete Task", "error");
+  const { mutateAsync: deleteTask } = useDeleteTask();
+  const { mutateAsync: editTask } = useEditTask();
+
+  const handleDeleteTask = (id: string) => {
+    deleteTask({ userId: task.userId, id: task.id }).then(() => {
+      closeModal();
+      showNotification("Delete Task", "success");
+    });
   };
 
-  const onSubmit = (values: TaskInterface) => {
-    dispatch(updatedTask(values));
-    closeModal();
-    showNotification("Update Task", "success");
+  const onSubmitUpdateTask = (values: TaskInterface) => {
+    editTask(values).then(() => {
+      closeModal();
+      showNotification("Update Task", "success");
+    });
+  };
+
+  const handleTaskStatus = (e: SelectChangeEvent) => {
+    editTask({
+      ...task,
+      taskStatus: e.target.value as TaskStatus,
+    });
   };
 
   return (
     <>
-      <div className={styles.task}>
+      <div
+        className={styles.task}
+        onMouseEnter={() => setIsShown(true)}
+        onMouseLeave={() => setIsShown(false)}
+      >
         <div className={styles.data}>
-          <ListAlt className={styles.list} />
-          <div className={styles.details}>
-            <h3 className={styles.description}>{taskObj.description}</h3>
-            <p>
-              <EventNote className={styles.dataIcon} /> creation date :{" "}
-              {taskObj.date}
-            </p>
-            <p>
-              <PlaylistAddCheck className={styles.dataIcon} />
-              completed : {taskObj.completed ? "true" : "false"}
-            </p>
-          </div>
+          <Typography
+            sx={{ display: "flex", alignItems: "center", fontSize: "17px" }}
+          >
+            <ListAlt className={styles.list} sx={{ mr: 1 }} />
+            {task?.description}
+
+            <Zoom in={isShown}>
+              <Edit
+                onClick={() => {
+                  openModal("edit_Task");
+                }}
+                sx={{ ml: 2, color: "", fontSize: "17px", cursor: "pointer" }}
+              />
+            </Zoom>
+          </Typography>
         </div>
         <div className={styles.actions}>
-          <Edit
-            className={styles.actionIcon}
-            onClick={() => {
-              openModal("edit_Task");
+          <Select
+            value={task.taskStatus}
+            defaultValue={task.taskStatus}
+            onChange={handleTaskStatus}
+            sx={{
+              width: "115px",
+              height: "24px",
+              fontSize: "14px",
+              bgcolor: theme.palette.grey[200],
+              ".MuiOutlinedInput-notchedOutline": { border: 0 },
             }}
-          />
+          >
+            {Object.keys(TaskStatus)?.map((item) => (
+              <MenuItem
+                value={item}
+                key={item}
+              >
+                {item}
+              </MenuItem>
+            ))}
+          </Select>
 
           <DeleteForever
-            className={styles.actionIcon}
+            sx={{ ml: 2, color: "red", fontSize: "17px", cursor: "pointer" }}
             onClick={() => {
               openModal("delete_Task");
             }}
           />
         </div>
       </div>
+
       <SharedModal
         open={isModalOpen("edit_Task")}
         onClose={closeModal}
@@ -88,19 +126,19 @@ const Task = (props: IProps) => {
             label: "Edit",
             type: "submit",
             variant: "contained",
-            color: "success",
+            color: "primary",
             form: "task_form",
           },
         }}
       >
-        <TaskForm onSubmit={onSubmit} defaultValues={taskObj} />
+        <TaskForm onSubmit={onSubmitUpdateTask} defaultValues={task} />
       </SharedModal>
 
       <SharedModal
         open={isModalOpen("delete_Task")}
         onClose={closeModal}
         onCancel={closeModal}
-        onSubmit={() => handleDeleteTask(taskObj.id)}
+        onSubmit={() => handleDeleteTask(task.id)}
         modal={{
           title: "Delete Task",
           closeButton: {

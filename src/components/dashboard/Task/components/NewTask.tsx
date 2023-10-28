@@ -24,9 +24,8 @@ const NewTask = () => {
       <Button
         onClick={() => openModal("add_Task")}
         variant="contained"
-        className="purpleButton"
       >
-        create new task <AddCircle />
+        create new task  <AddCircle  sx={{marginLeft:'5px'}} />
       </Button>
       <SharedModal
         open={isModalOpen("add_Task")}

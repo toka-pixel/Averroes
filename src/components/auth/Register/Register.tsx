@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { Button, TextField, Box, Typography } from "@mui/material";
+import {  TextField, Box, Typography } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -7,6 +7,7 @@ import useAddUser from "../Hooks/useAddUser";
 import { UserInterface } from "@/shared/user.interface";
 import { handleUserAccount } from "@/store/User/userSlice";
 import { useAppDispatch } from "@/hooks/storeIndex";
+import Link from "next/link";
 import Cookies from "js-cookie";
 
 const Register = () => {
@@ -21,7 +22,7 @@ const Register = () => {
     lastName: "",
     email: "",
     password: "",
-    id:''
+    id: "",
   });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -37,15 +38,7 @@ const Register = () => {
     event.preventDefault();
 
     addUser(values).then((res: any) => {
-
-      // localStorage.setItem(
-      //   "tasks-management",
-      //   JSON.stringify({
-      //     name: values?.email.split("@")[0],
-      //     userId: res?.data?.id,
-      //   })
-      // );
-      Cookies.set("tasks-management-userId",  res?.data?.id);
+      Cookies.set("tasks-management-userId", res?.data?.id);
       dispatch(handleUserAccount(values));
       router.push("/home");
     });
@@ -113,7 +106,6 @@ const Register = () => {
           autoComplete="current-password"
           onChange={handleChange}
         />
-
         <LoadingButton
           type="submit"
           variant="contained"
@@ -124,17 +116,8 @@ const Register = () => {
         >
           Sign up
         </LoadingButton>
-
         <br />
-
-        <Button
-          variant="contained"
-          color="secondary"
-          fullWidth
-          onClick={() => router.push("/login")}
-        >
-          Sign in
-        </Button>
+        Have an account already?<Link href="/login"> Sign in </Link>
       </form>
     </Box>
   );

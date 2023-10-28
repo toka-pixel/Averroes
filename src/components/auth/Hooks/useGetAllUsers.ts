@@ -1,6 +1,7 @@
 import { getAllUsers } from "@/services/user";
 import { useQuery } from "react-query";
 
+
 const useGetAllUsers = () => {
   const query = useQuery(["users"], getAllUsers, {
     select: (data) => data?.data,
@@ -10,4 +11,3 @@ const useGetAllUsers = () => {
 };
 
 export default useGetAllUsers;
-

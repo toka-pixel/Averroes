@@ -9,6 +9,7 @@ import { showNotification } from "@/utils/utils";
 import { handleUserAccount } from "@/store/User/userSlice";
 import Cookies from "js-cookie";
 import { useAppDispatch } from "@/hooks/storeIndex";
+import Link from "next/link";
 
 function Login() {
   const router = useRouter();
@@ -96,7 +97,6 @@ function Login() {
           className={"textField"}
           onChange={handleChange}
         />
-
         <LoadingButton
           type="submit"
           variant="contained"
@@ -107,17 +107,9 @@ function Login() {
         >
           sign in
         </LoadingButton>
-
         <br />
-
-        <Button
-          variant="contained"
-          fullWidth
-          onClick={() => router.push("/register")}
-          color="secondary"
-        >
-          Sign up
-        </Button>
+        Don't have an account?
+        <Link href="/register"> Sign up</Link>
       </form>
     </Box>
   );

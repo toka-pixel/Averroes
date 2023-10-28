@@ -19,9 +19,9 @@ import { handleTasks } from "@/store/User/userSlice";
 import useGetTasksOfUser from "../Task/hooks/useGetTasksOfUser";
 
 const ActiveUsers = () => {
+
   const { data: allUsersData } = useGetAllUsers();
-console.log(allUsersData)
-  const [selectedUsers] = useState<Array<string>>([]);
+
   const [activeUser, setActiveUser] = useState<string>("1");
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -31,22 +31,9 @@ console.log(allUsersData)
 
   const { data: userTasks } = useGetTasksOfUser(activeUser || "1");
 
-  const checkUser = (id: string) =>
-    selectedUsers.findIndex((userId) => userId === id);
 
   const handleTasksOfUser = (event: ChangeEvent<HTMLInputElement>) => {
     setActiveUser(event.target.value);
-    // dispatch(selectedActiveUsers({ id }));
-    // if (checkUser(id) === -1) {
-    //   setSelectedUsers([...selectedUsers, id]);
-    //   setActiveUser(id);
-    //   // setNotActiveUser("");
-    // } else {
-    //   setSelectedUsers((prev) => prev.filter((userId) => userId !== id));
-    //   setActiveUser("");
-    //   // setNotActiveUser(id);
-    //   setTasksList((prev) => prev.filter((task) => task.userId !== id));
-    // }
   };
 
   useEffect(() => {

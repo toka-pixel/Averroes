@@ -70,7 +70,7 @@ const Home = () => {
     <div className={styles.home}>
       <Weather />
       <div className={styles["tasks_newTask"]}>
-        <span className="paragraph">My Tasks</span>
+        <span className="paragraph">All Tasks</span>
         <NewTask />
       </div>
 
@@ -106,7 +106,7 @@ const Home = () => {
         <Grid item xs={12} sm={9}>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <SearchInput onSearchInputChange={handleSearchInputChange} />
-            <ActiveUsers />
+            <ActiveUsers /> 
           </Box>
           <br />
           <TaskData tasks={tasksList} />
